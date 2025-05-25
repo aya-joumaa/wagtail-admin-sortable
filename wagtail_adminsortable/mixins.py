@@ -9,6 +9,7 @@ class AjaxableResponseMixin(object):
     Mixin to add AJAX support to a form.
     Must be used with an object-based FormView
     """
+
     def form_invalid(self, form):
         response = super(AjaxableResponseMixin, self).form_invalid(form)
         if self.request.is_ajax():
@@ -18,7 +19,7 @@ class AjaxableResponseMixin(object):
 
     def form_valid(self, form):
         super(AjaxableResponseMixin, self).form_valid(form)
-        if self.request.is_ajax():
+        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
             objects = json.loads(self.request.POST.get('objects', '[]'))
             data = {
                 'message': 'success'

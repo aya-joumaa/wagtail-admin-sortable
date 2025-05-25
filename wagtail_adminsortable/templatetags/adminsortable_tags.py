@@ -2,7 +2,7 @@ from django.template import Library
 from django.forms.utils import flatatt
 from django.utils.safestring import mark_safe
 from django.contrib.admin.templatetags.admin_list import result_headers
-from wagtail.contrib.modeladmin.templatetags.modeladmin_tags import results
+from wagtail_modeladmin.templatetags.modeladmin_tags import results
 
 register = Library()
 
@@ -24,7 +24,7 @@ def sortable_result_list(context):
     context.update({
         'result_headers': headers,
         'num_sorted_fields': num_sorted_fields,
-        'results': list(results(view, object_list, request))})
+        'results': list(results(view, object_list, context["request"]))})
     return context
 
 
